@@ -7,6 +7,14 @@ The goal is to apply the knowledge of SQL.
 The application was made with Java programming language using VS code.
 
 # What is in the database?
+Some points are further split into 2 tables.
+- patient's data(Name, birth date phone number, diagnosis, emergency contact, insurance provider)
+- employee's data(Name, SSN, birth date, salary, occupation
+- doctor's schedule(doctor's ID and time slot
+- doctor's specialization(doctor's ID and specialization)
+- medicine data sold in the clinic's pharmacy(name, price, information whether a medicine needs a prescription or not, number of available supply.
+- transactions(billing ID, patients ID being billed, date, amount payed, cashier ID
+- medicine supplier and medicine orders
 to see more details refer to .sql file.
 The initial data injected to the database are also in the same file.
 
