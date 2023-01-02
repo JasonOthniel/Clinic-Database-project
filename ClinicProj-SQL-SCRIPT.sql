@@ -1,102 +1,102 @@
 ##Creating table
 
 CREATE TABLE employee(
-employeeID	int			NOT NULL,
-SSN			int			NOT NULL UNIQUE, /*let the front end take care the rest*/
-Fname		varchar(20) NOT NULL,
-Lname		varchar(20)	NOT NULL,
-birthDate	Date		NOT NULL,
-sex			char(1)		NOT NULL,
-phone		bigint		NOT NULL UNIQUE,
-salary		Float		NOT NULL,
+employeeID	int			    NOT NULL,
+SSN			    int			    NOT NULL UNIQUE, /*let the front end take care the rest*/
+Fname		    varchar(20) NOT NULL,
+Lname		    varchar(20)	NOT NULL,
+birthDate	  Date		    NOT NULL,
+sex			    char(1)		  NOT NULL,
+phone		    bigint		  NOT NULL UNIQUE,
+salary		  Float		    NOT NULL,
 occupation	varchar(20)	NOT NULL,
 PRIMARY KEY (employeeID)
 )
 
 CREATE TABLE patient(
-patientNum			int				NOT NULL,
-birthDate			date			NOT NULL,
-insuranceProvider	varchar(20)		NOT NULL,
-Fname				varchar(20)		NOT NULL,
-Lname				varchar(20)		NOT NULL,
-sex					char(1)			NOT NULL,
-Phone				bigint			NOT NULL UNIQUE,
-diagnosis			varchar(100),
-emergencyNO			bigint			NOT NULL UNIQUE, /*use special value if no emergencyNO*/	
+patientNum			  int			  	NOT NULL,
+birthDate			    date		  	NOT NULL,
+insuranceProvider	varchar(20)	NOT NULL,
+Fname				      varchar(20)	NOT NULL,
+Lname				      varchar(20)	NOT NULL,
+sex					      char(1)			NOT NULL,
+Phone				      bigint			NOT NULL UNIQUE,
+diagnosis			    varchar(100),
+emergencyNO			  bigint			NOT NULL UNIQUE, /*use special value if no emergencyNO*/	
 PRIMARY KEY (patientNum)
 )
 
 CREATE TABLE doctor(
-docID				int				NOT NULL,
-specialization		varchar(20)		NOT NULL,
+docID				    int				  NOT NULL,
+specialization	varchar(20)		NOT NULL,
 PRIMARY KEY	(docID),
 FOREIGN KEY (docID) REFERENCES employee(employeeID) ON DELETE CASCADE
 )
 
 CREATE TABLE emgContact(
-emergencyNO		bigint				NOT NULL,
-ECname			varchar(20)			NOT NULL,
-relation		varchar(20)			NOT NULL,
+emergencyNO		bigint				  NOT NULL,
+ECname			  varchar(20)			NOT NULL,
+relation		  varchar(20)			NOT NULL,
 PRIMARY KEY	(emergencyNO),
 FOREIGN KEY (emergencyNO) REFERENCES patient(emergencyNO) ON DELETE CASCADE ON UPDATE CASCADE
 )
 
 CREATE TABLE treat(
-patientNum		int			NOT NULL,
-docID			int			NOT NULL,
-timeslot		DateTime	NOT NULL
+patientNum		int		  	NOT NULL,
+docID			    int		  	NOT NULL,
+timeslot		  DateTime	NOT NULL
 PRIMARY KEY (patientNum, docID, timeslot),
 FOREIGN KEY (patientNum) REFERENCES patient(patientNum) ON DELETE CASCADE ON UPDATE CASCADE,
 FOREIGN KEY (docID) REFERENCES doctor(docID) ON DELETE CASCADE ON UPDATE CASCADE
 )
 
 CREATE TABLE Dschedule(
-docID			int			NOT NULL,
+docID		  	int			  NOT NULL,
 schedule		DateTime	NOT NULL,
 PRIMARY KEY (docID, schedule),
 FOREIGN KEY (docID) REFERENCES doctor(docID) ON DELETE CASCADE ON UPDATE CASCADE
 )
 
 CREATE TABLE drug(
-productNUM	int					NOT NULL,
-Dname		varchar(20)			NOT NULL UNIQUE,
-price		Float				NOT NULL,
-reserve		int,
+productNUM	      int					NOT NULL,
+Dname		          varchar(20)	NOT NULL UNIQUE,
+price		          Float				NOT NULL,
+reserve		         int,
 needPrescription	varchar(1)	NOT NULL,
 PRIMARY KEY (productNUM)
 )
 
 CREATE TABLE receiveDrug(
 patientNum		int		NOT NULL,
-drugNUM			int		NOT NULL,
-quantity		int		NOT NULL,
+drugNUM			  int		NOT NULL,
+quantity		  int		NOT NULL,
 FOREIGN KEY (patientNum) REFERENCES patient(patientNum) ON UPDATE CASCADE,             
 FOREIGN KEY (drugNUM) REFERENCES drug(productNUM) ON UPDATE CASCADE
 )
 CREATE TABLE trans(
-billID		int			NOT NULL,
+billID		  int			NOT NULL,
 patientNum	int			NOT NULL,
 employeeID	int			NOT NULL DEFAULT 0,
 dateIssued	Date		NOT NULL,
-cost		Float		NOT NULL,
+cost		    Float		NOT NULL,
 PRIMARY KEY(billID),
 FOREIGN KEY (patientNum) REFERENCES patient(patientNum) ON UPDATE CASCADE,
 FOREIGN KEY (employeeID) REFERENCES employee(employeeID) ON DELETE SET DEFAULT 
 )
 CREATE TABLE supplier(
-Sname		varchar(20)		NOT NULL,
-phone		bigint			NOT NULL UNIQUE,
-contact		varchar(20)		NOT NULL,
+Sname		    varchar(20)		NOT NULL,
+phone		    bigint			  NOT NULL UNIQUE,
+contact		  varchar(20)		NOT NULL,
 PRIMARY KEY (Sname)
 )
 CREATE TABLE supplies(
-orderID			int			NOT NULL,
-orderDate		Date		NOT NULL,
+orderID			  int			    NOT NULL,
+orderDate		  Date		    NOT NULL,
 supplierName	varchar(20)	NOT NULL,
-employeeID		int			NOT NULL DEFAULT 0,
-prodNum			int			NOT NULL,
-quantity		int			NOT NULL,
-price			float		NOT NULL,
+employeeID		int			    NOT NULL DEFAULT 0,
+prodNum			  int			    NOT NULL,
+quantity		  int			    NOT NULL,
+price			    float		    NOT NULL,
 PRIMARY KEY(orderID),
 FOREIGN KEY (supplierName) REFERENCES supplier(Sname) ON UPDATE CASCADE,	
 FOREIGN KEY (employeeID) REFERENCES employee(employeeID) ON DELETE SET DEFAULT
