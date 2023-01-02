@@ -8,4 +8,5 @@ The application was made with Java.
 
 # What is in the database?
 Employee data, patients data, doctor's schedule, drugs that are sold in a pharmacy, drug supplier.
-to see more details refer to .sql file
+to see more details refer to .sql file.
+The initial data injected to the database are also in the same file.
